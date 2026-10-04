@@ -1,37 +1,44 @@
-# Easy Pay: dniówki dla kontraktorów B2B na Solanie
+# Easy Pay: codzienna wypłata dla kontraktorów B2B
 
 ## Problem
 
-Kontraktor B2B, który pracuje dla firmy z innego kraju, zwykle pracuje miesiąc na zaufanie i potem czeka 30 dni lub dłużej na przelew. Nasz kolega przepracował trzy miesiące dla zagranicznego startupu, odszedł, a founder odmówił zapłaty za ostatni miesiąc, około 10 tys. USD. Sprawa w sądzie za granicą kosztowałaby więcej niż ta kwota. Dziś jedynym zabezpieczeniem jest pośrednik, któremu trzeba ufać.
+Kontraktor B2B, czyli osoba na własnej działalności, która pracuje dla firmy z innego kraju, zwykle pracuje cały miesiąc na zaufanie, a potem czeka 30 dni lub dłużej na przelew. Nasz kolega przepracował trzy miesiące dla zagranicznego startupu i odszedł, a founder odmówił mu zapłaty za ostatni miesiąc, około 10 tys. USD. Sprawa w sądzie za granicą kosztowałaby więcej niż ta kwota. Dziś jedynym zabezpieczeniem jest firma pośrednicząca, której też trzeba zaufać.
 
 ## Rozwiązanie
 
-Firma wpłaca USDC do jednej puli w programie on-chain na Solanie. Kontraktor co dzień zarabia swoją stawkę, a tego, co już zarobił, firma nie może zabrać. Zasady są zapisane w programie, nie na naszym serwerze, więc ani firma, ani my nie możemy przesunąć zarobionych pieniędzy.
+Firma wpłaca pieniądze do wspólnej puli, czyli skarbonki na wypłaty. Pula działa na Solanie, publicznym rejestrze (blockchainie), którego nie kontroluje żadna pojedyncza firma. Zasady puli zapisaliśmy w programie działającym w tym rejestrze. Pieniądze w puli to USDC, cyfrowy dolar (1 USDC = 1 USD).
 
-- Kontraktor podpisuje dokładne warunki umowy. Akceptacja przechodzi tylko wtedy, gdy pula pokrywa okres wypowiedzenia.
-- Firma może wypłacić z puli tylko to, czego pracownicy jeszcze nie zarobili, pomniejszone o rezerwę na wypowiedzenie.
-- Jeśli firma zniknie, pieniądze zostają w puli i kontraktor nadal je odbiera.
-- W programie nie ma kluczy admina ani uprzywilejowanych instrukcji.
+Kontraktor zarabia swoją stawkę każdego dnia i może ją od razu odebrać. Tego, co już zarobił, firma nie może cofnąć. My, autorzy aplikacji, też nie, bo program nie daje nikomu takiego uprawnienia.
+
+- Przed startem kontraktor akceptuje dokładne warunki umowy. Umowa rusza tylko wtedy, gdy w puli są pieniądze co najmniej na okres wypowiedzenia.
+- Firma może wyjąć z puli tylko pieniądze, których kontraktorzy jeszcze nie zarobili, poza rezerwą na wypowiedzenie.
+- Jeśli firma zniknie, pieniądze zostają w puli i kontraktor nadal może odebrać to, co zarobił.
 
 ## Co już działa
 
-- Pula firmy: wpłata, wypłata niezarobionych środków i podgląd rezerwy.
-- Umowy ze stawką dzienną lub godzinową, z okresem wypowiedzenia i opcjonalną datą końca. Pracę można liczyć tylko w dni robocze.
-- Claim ręczny albo automatyczny. Auto-claim robi nasz serwer, ale wysyła pieniądze tylko tam, gdzie wskazał kontraktor.
-- Podział każdej wypłaty, na przykład 25% na konto podatkowe i 10% dla mamy, plus wymiana części na SOL, BTC lub ETH po kursie z Pytha. Etykiety odbiorców są zaszyfrowane on-chain.
-- Historia transakcji z linkami do Solana Explorer, zaświadczenie o dochodach w PDF oraz CSV do podatków z kursami NBP.
-- Zakładka Companies: historia każdej firmy prosto z łańcucha, czyli liczba umów, ile wypłaciła i ile razy zabrakło jej środków w puli.
-- Program w Rust (Anchor) wdrożony na devnecie, testy programu w LiteSVM i test end-to-end w przeglądarce.
+- Pula firmy: wpłata, wypłata niezarobionych pieniędzy i podgląd rezerwy.
+- Umowy ze stawką dzienną lub godzinową, z okresem wypowiedzenia i opcjonalną datą końca. Można liczyć tylko dni robocze.
+- Odbiór zarobionych pieniędzy jednym kliknięciem albo automatycznie. Automat działa na naszym serwerze, ale może wysłać pieniądze tylko na konta wskazane przez kontraktora.
+- Podział każdej wypłaty, np. 25% na odłożenie na podatek i 10% dla mamy. Część można od razu wymienić na SOL, BTC lub ETH po aktualnym kursie rynkowym. Nazwy odbiorców są zaszyfrowane.
+- Historia operacji, gdzie każdą można sprawdzić w publicznym rejestrze. Zaświadczenie o dochodach w PDF i plik CSV do rozliczenia podatku z kursami NBP.
+- Zakładka Companies, czyli publiczna historia płatnicza każdej firmy: ile umów zawarła, ile wypłaciła i ile razy zabrakło jej pieniędzy w puli.
+- Program działa w sieci testowej Solany (Devnet) i ma testy automatyczne.
 
-## Jak uruchomić
+## Plany
 
-1. Zainstaluj portfel Phantom i włącz tryb testnet, sieć Solana Devnet.
-2. Pobierz testowe SOL z https://faucet.solana.com i testowe USDC z https://faucet.circle.com (sieć Solana Devnet).
-3. Otwórz https://solana-easypay.vercel.app/app i połącz portfel.
-4. Jako firma: w zakładce Pool utwórz pulę i wpłać USDC, potem w Contracts zaproponuj umowę na adres kontraktora.
-5. Jako kontraktor (drugie konto w Phantomie): zaakceptuj ofertę w Contracts, a zarobione pieniądze odbierz w zakładce Claim.
+- Odsetki dla firm: pieniądze czekające w puli mogłyby na siebie zarabiać, co zachęci firmy do wpłacania z góry.
 
-Uruchomienie lokalne jest opisane w [README](../README.md) (devcontainer, `pnpm dev`, gotowe konta testowe i przycisk seed demo).
+## Jak wypróbować
+
+Aplikacja działa w sieci testowej, więc wszystkie pieniądze są testowe i darmowe.
+
+1. Zainstaluj Phantom (https://phantom.com), rozszerzenie do przeglądarki, które służy jako portfel na cyfrowe pieniądze. W ustawieniach włącz tryb testowy (Testnet Mode) i wybierz sieć Solana Devnet.
+2. Skopiuj adres swojego portfela z Phantoma. Pobierz na niego darmowe testowe SOL, potrzebne do drobnych opłat za operacje, z https://faucet.solana.com, oraz testowe USDC z https://faucet.circle.com (wybierz Solana Devnet).
+3. Otwórz https://solana-easypay.vercel.app/app i kliknij połączenie portfela.
+4. Jako firma: w zakładce Pool utwórz pulę i wpłać USDC, potem w zakładce Contracts zaproponuj umowę na adres portfela kontraktora.
+5. Jako kontraktor: dodaj w Phantomie drugie konto, zaakceptuj ofertę w zakładce Contracts, a zarobione pieniądze odbierz w zakładce Claim.
+
+Uruchomienie na własnym komputerze jest opisane w [README](../README.md).
 
 ## Repozytorium
 
