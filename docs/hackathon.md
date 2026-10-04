@@ -22,11 +22,8 @@ Kontraktor zarabia swoją stawkę każdego dnia i może ją od razu odebrać. Te
 - Podział każdej wypłaty, np. 25% na odłożenie na podatek i 10% dla mamy. Część można od razu wymienić na SOL, BTC lub ETH po aktualnym kursie rynkowym. Nazwy odbiorców są zaszyfrowane.
 - Historia operacji, gdzie każdą można sprawdzić w publicznym rejestrze. Zaświadczenie o dochodach w PDF i plik CSV do rozliczenia podatku z kursami NBP.
 - Zakładka Companies, czyli publiczna historia płatnicza każdej firmy: ile umów zawarła, ile wypłaciła i ile razy zabrakło jej pieniędzy w puli.
+- Staking dla firm, czyli zablokowanie części pieniędzy na pewien czas w zamian za nagrodę, podobnie jak lokata w banku. Dzięki temu firmie bardziej opłaca się korzystać z Easy Pay.
 - Program działa w sieci testowej Solany (Devnet) i ma testy automatyczne.
-
-## Plany
-
-- Odsetki dla firm: pieniądze czekające w puli mogłyby na siebie zarabiać, co zachęci firmy do wpłacania z góry.
 
 ## Jak wypróbować
 
