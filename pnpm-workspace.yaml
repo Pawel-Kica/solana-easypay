@@ -1,0 +1,16 @@
+packages:
+  - app
+
+# Native helpers pulled in by @anchor-lang/core (same list as the bootcamp's holdup example).
+allowBuilds:
+  bigint-buffer: true
+  bufferutil: true
+  utf-8-validate: true
+  # Pulled in by jspdf, its script only prints a banner.
+  core-js: false
+  # tsx runs the auto-claim server, esbuild fetches its platform binary.
+  esbuild: true
+
+# `pnpm scenarios` runs on the Mac, whose pnpm sees the container's Linux node_modules as stale and would reinstall
+# them before the script. Warn instead of installing.
+verifyDepsBeforeRun: warn

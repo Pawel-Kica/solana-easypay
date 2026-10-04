@@ -1,0 +1,9 @@
+{
+  "idl": "target/idl/easypay.json",
+  "scripts": {
+    "js": {
+      "from": "@codama/renderers-js",
+      "args": ["app", { "generatedFolder": "src/generated", "syncPackageJson": false }]
+    }
+  }
+}

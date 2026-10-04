@@ -1,0 +1,40 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "tsx --test tests/*.test.mjs tests/*.test.ts",
+    "test:program": "tsx --test tests/program.test.ts",
+    "build": "tsc --noEmit && tsc --noEmit -p server && vite build",
+    "preview": "vite preview",
+    "autoclaim": "tsx server/autoclaim.ts",
+    "autoclaim:devnet": "NETWORK=Devnet tsx server/autoclaim.ts"
+  },
+  "dependencies": {
+    "@solana-program/token": "^0.15.0",
+    "@solana/kit": "^7.1.0",
+    "@solana/kit-plugin-rpc": "^0.16.0",
+    "@solana/kit-plugin-signer": "^0.13.0",
+    "@solana/kit-plugin-wallet": "0.17.0",
+    "@solana/program-client-core": "^7.1.0",
+    "@solana/sysvars": "^7.1.0",
+    "jspdf": "^4.2.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "litesvm": "1.4.1",
+    "playwright": "^1.63.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.2"
+  }
+}

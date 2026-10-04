@@ -1,0 +1,23 @@
+[toolchain]
+package_manager = "pnpm"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+easypay = "BNUCb9cqqaxfVsNiRNofP2RVTjNn6XKnpcfRQWas8FYQ"
+
+[programs.devnet]
+easypay = "BNUCb9cqqaxfVsNiRNofP2RVTjNn6XKnpcfRQWas8FYQ"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "pnpm --filter app test"
+
+[hooks]
+# Regenerate the TS client in app/src/generated from the IDL.
+post-build = "pnpm codama"

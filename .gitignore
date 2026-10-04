@@ -1,0 +1,25 @@
+# Build output. The program ID keypair stays committed (devnet only, shared address).
+/target/*
+!/target/deploy/
+/target/deploy/*
+!/target/deploy/easypay-keypair.json
+**/*.rs.bk
+.anchor
+test-ledger
+.surfpool
+
+node_modules
+.pnpm-store
+dist
+
+# Devnet deployer key and other secrets
+.env
+
+.DS_Store
+*.log
+
+# Local overrides, e.g. app/.env.local with VITE_RPC_URL
+*.local
+
+# Vercel CLI link to the project
+.vercel

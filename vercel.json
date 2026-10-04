@@ -1,0 +1,13 @@
+{
+  "installCommand": "pnpm install --filter app",
+  "buildCommand": "pnpm --filter app build",
+  "outputDirectory": "app/dist",
+  "rewrites": [
+    { "source": "/app", "destination": "/index.html" },
+    { "source": "/app/", "destination": "/index.html" },
+    { "source": "/stats", "destination": "/index.html" },
+    { "source": "/stats/", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/", "destination": "/index.html" }
+  ]
+}

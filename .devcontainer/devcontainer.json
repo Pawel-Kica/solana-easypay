@@ -1,0 +1,98 @@
+{
+  "name": "solana-easypay",
+
+  // Bootcamp devcontainer (matzayonc/solana-live-course-2026): Anchor 1.1.2,
+  // Rust 1.95, Node 24, Surfpool. The source is bind-mounted.
+  // The base image is amd64 only, so Apple Silicon runs it under emulation.
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "target": "toolchain",
+    "context": "..",
+    "options": ["--platform=linux/amd64"]
+  },
+
+  "remoteUser": "root",
+
+  "remoteEnv": {
+    "LIVE_ROOT": "${containerWorkspaceFolder}"
+  },
+
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // Surfpool RPC, Surfpool websocket, Vite, Surfpool Studio on the Mac's localhost.
+  // Published with appPort instead of forwardPorts, because the devcontainers CLI
+  // (the agent path) ignores forwardPorts. Servers in the container must listen on 0.0.0.0.
+  "appPort": [
+    "127.0.0.1:8899:8899",
+    "127.0.0.1:8900:8900",
+    "127.0.0.1:5173:5173",
+    "127.0.0.1:18488:18488"
+  ],
+  // Already published, so VS Code should not forward them a second time.
+  "portsAttributes": {
+    "8899": { "label": "Surfpool RPC", "onAutoForward": "ignore" },
+    "8900": { "label": "Surfpool WS", "onAutoForward": "ignore" },
+    "5173": { "label": "Web app", "onAutoForward": "ignore" },
+    "18488": { "label": "Surfpool Studio", "onAutoForward": "ignore" }
+  },
+
+  // Chromium and its system libraries for the browser smoke test (pnpm smoke).
+  "postCreateCommand": "pnpm install && cd app && pnpm exec playwright install --with-deps chromium-headless-shell",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Rust & Cargo
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "vadimcn.vscode-lldb",
+        "fill-labs.dependi",
+
+        // TypeScript & Web
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "christian-kohler.path-intellisense",
+        "bradlc.vscode-tailwindcss",
+
+        // Infrastructure & Docker
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+
+        // System Monitoring & Quality of Life
+        "mutantdino.resourcemonitor",
+        "usernamehw.error-lens",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "streetsidesoftware.code-spell-checker",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "rust-analyzer.check.command": "clippy",
+        "rust-analyzer.procMacro.enable": true,
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "errorLens.enabled": true,
+        "resourcemonitor.cpu.enable": true,
+        "resourcemonitor.memory.enable": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        }
+      }
+    }
+  },
+
+  "mounts": [
+    "source=easypay-cargo-registry,target=/root/.cargo/registry,type=volume",
+    "source=easypay-npm-cache,target=/root/.npm,type=volume"
+  ]
+}

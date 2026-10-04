@@ -1,0 +1,10 @@
+# Vercel only builds the web app, so upload just app/ and the pnpm workspace files.
+/*
+!/app
+!/package.json
+!/pnpm-lock.yaml
+!/pnpm-workspace.yaml
+!/vercel.json
+/app/node_modules
+/app/dist
+/app/.env.local

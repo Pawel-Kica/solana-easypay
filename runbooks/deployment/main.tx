@@ -1,0 +1,20 @@
+################################################################
+# Manage easypay deployment through Crypto Infrastructure as Code
+################################################################
+
+addon "svm" {
+    rpc_api_url = input.rpc_api_url
+    network_id = input.network_id
+}
+
+action "deploy_easypay" "svm::deploy_program" {
+    description = "Deploy easypay program"
+    program = svm::get_program_from_anchor_project("easypay") 
+    authority = signer.authority
+    payer = signer.payer
+    // Optional: if you want to deploy the program via a cheatcode when targeting a Surfnet, set `instant_surfnet_deployment = true`
+    // Deploying via a cheatcode will write the program data directly to the program account, rather than sending transactions.
+    // This will make deployments instantaneous, but is deviating from how the deployments will take place on devnet/mainnet.
+    // On for local deploys, so `pnpm dev` and its --watch redeploys are instant.
+    instant_surfnet_deployment = input.network_id == "localnet"
+}
